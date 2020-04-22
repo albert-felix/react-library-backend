@@ -1,9 +1,12 @@
-var http = require("http");
+require("./config/db")
+const express = require("express");
 
-//create a server object:
-http
-  .createServer(function(req, res) {
-    res.write("Hello World!"); //write a response to the client
-    res.end(); //end the response
-  })
-  .listen(8080); //the server object listens on port 8080
+const app = express();
+
+app.get("/",(req,res) => {
+  res.send("Backend for library running")
+});
+
+const server = app.listen(8080, () => {
+  console.log(`Server running in port ${server.address().port}`)
+})
