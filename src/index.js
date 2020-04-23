@@ -1,12 +1,21 @@
-require("./config/db")
+require("./config/db");
 const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const bookRouter = require("./routers/bookRouter");
 
 const app = express();
 
-app.get("/",(req,res) => {
-  res.send("Backend for library running")
+app.set("trust proxy", 1);
+app.use(bodyParser.json());
+app.use(cors());
+
+app.get("/", (req, res) => {
+  res.send("Backend for library running");
 });
 
+app.use('/books',bookRouter);
+
 const server = app.listen(8080, () => {
-  console.log(`Server running in port ${server.address().port}`)
-})
+  console.log(`Server running in port ${server.address().port}`);
+});

@@ -70,4 +70,3 @@ const clearBooks = () => {
 // clearBooks();
 seedBooks();
 
-module.exports = seedBooks;
