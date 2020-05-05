@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const { Schema, model } = mongoose;
 
+
 const userSchema = new Schema({
   
   firstName: {
@@ -14,13 +15,19 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
     type: String,
     required: true
-  }
-  
+  },
+  booksBorrowed: [
+    {
+      type: String
+    } 
+  ]
+
 });
 
 const User = model("user", userSchema);

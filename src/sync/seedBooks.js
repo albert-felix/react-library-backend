@@ -1,6 +1,8 @@
 require("../config/db");
 
 const Book = require("../models/book");
+const User = require("../models/user");
+
 
 const seedBooks = () => {
   const bookData = [
@@ -67,6 +69,12 @@ const clearBooks = () => {
     .catch(console.error);
 };
 
-// clearBooks();
-seedBooks();
+const clearUsers = () => {
+  User.remove({})
+  .then(console.log)
+  .catch(console.error)
+};
 
+// clearBooks();
+// seedBooks();
+// clearUsers();
