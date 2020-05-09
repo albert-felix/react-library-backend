@@ -101,6 +101,16 @@ userRouter
       console.error(e);
       res.status(500).send("Internal Server Error");
     }
+  })
+  .post("/profile", async (req,res) => {
+    try{
+      const email = req.body.currentUser;
+      const user = await User.findOne({email: email}).exec();
+      res.status(200).json({user})
+    } catch (e) {
+      console.error(e);
+      res.status(500).send("Internal Server Error");
+    }
   });
 
 module.exports = userRouter;
