@@ -17,7 +17,7 @@ const seedBooks = () => {
     {
       title: "Think and Grow Rich",
       author: "Napoleon Hill",
-      copies: 5,
+      copies: 0,
       description:
         "Think and Grow Rich by Napoleon Hill is one of the bestselling motivational books of all-time. Inspired by a suggestion from industrialist Andrew Carnegie, Hill explains the philosophy that helped the wealthiest and most accomplished members of society succeed.",
       ISBN: "123-456"
@@ -76,5 +76,5 @@ const clearUsers = () => {
 };
 
 // clearBooks();
-// seedBooks();
 // clearUsers();
+// seedBooks();

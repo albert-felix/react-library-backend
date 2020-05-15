@@ -51,13 +51,13 @@ userRouter
       const book = await Book.findOne({ _id: id }).exec();
       const user = await User.findOne({ email: email }).exec();
       if (book.copies > 0) {
-        if (user.booksBorrowed.includes(book.title)) {
+        if (user.cart.includes(book.title)) {
           res.status(200).json({ status: "IN_CART" });
         } else {
           await Book.updateOne({ _id: id }, { $inc: { copies: -1 } }).exec();
           await User.updateOne(
             { email: email },
-            { $addToSet: { booksBorrowed: book.title } }
+            { $addToSet: { cart: book.title } }
           ).exec();
           res.status(200).json({ status: "SUCCESS" });
         }
@@ -73,7 +73,7 @@ userRouter
     try {
       const email = req.body.currentUser;
       const user = await User.findOne({ email: email }).exec();
-      const books = user.booksBorrowed;
+      const books = user.cart;
       res.status(200).json({ books });
     } catch (e) {
       console.error(e);
@@ -81,6 +81,41 @@ userRouter
     }
   })
   .post("/removeFromCart", async (req, res) => {
+    try {
+      const { bookName, currentUser: email } = req.body;
+      const user = await User.findOne({ email: email }).exec();
+      if (user.cart.includes(bookName)) {
+        await User.updateOne(
+          { email: email },
+          { $pull: { cart: bookName } }
+        ).exec();
+        await Book.updateOne(
+          { title: bookName },
+          { $inc: { copies: 1 } }
+        ).exec();
+        res.status(200).json({ status: "SUCCESS" });
+      } else {
+        res.status(200).json({ status: "NOT_IN_CART" });
+      }
+    } catch (e) {
+      console.error(e);
+      res.status(500).send("Internal Server Error");
+    }
+  })
+  .post("/borrowBooks", async (req, res) => {
+    try {
+      const { currentUser: email } = req.body;
+      const user = await User.findOne({ email: email }).exec();
+      const books = user.cart
+      await User.updateOne({email: email}, {$addToSet : {booksBorrowed : [...books] }}).exec();
+      await User.updateOne({email: email}, {$set: {cart : []}}).exec();
+      res.status(200).json({status: "SUCCESS"})
+    } catch (e) {
+      console.error(e);
+      res.status(500).send("Internal Server Error");
+    }
+  })
+  .post("/returnBooks", async (req, res) => {
     try {
       const { bookName, currentUser: email } = req.body;
       const user = await User.findOne({ email: email }).exec();
