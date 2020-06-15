@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
+    "build": "netlify-lambda build express",
     "start": "nodemon src/index.js"
   },
   "dependencies": {
@@ -12,7 +13,9 @@
     "cors": "2.8.5",
     "express": "4.17.1",
     "jsonwebtoken": "8.5.1",
-    "mongoose": "5.9.10"
+    "mongoose": "5.9.10",
+    "netlify-lambda": "1.6.3",
+    "serverless-http": "2.5.0"
   },
   "devDependencies": {
     "nodemon": "1.18.4"
