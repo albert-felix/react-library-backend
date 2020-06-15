@@ -18,6 +18,8 @@ app.get("/", (req, res) => {
 app.use("/books", bookRouter);
 app.use("/user", userRouter);
 
-const server = app.listen(8080, () => {
+const port = process.env.port || 3000;
+
+const server = app.listen(port, () => {
   console.log(`Server running in port ${server.address().port}`);
 });
