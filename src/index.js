@@ -1,6 +1,5 @@
 require("./config/db");
 const express = require("express");
-const serverless = require("serverless-http");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const bookRouter = require("./routers/bookRouter");
@@ -16,16 +15,9 @@ app.get("/", (req, res) => {
   res.send("Backend for library running");
 });
 
-
 app.use("/books", bookRouter);
 app.use("/user", userRouter);
-
-app.use("/.netlify/functions/index",bookRouter)
-app.use("/.netlify/functions/index",userRouter)
-
 
 const server = app.listen(8080, () => {
   console.log(`Server running in port ${server.address().port}`);
 });
-
-module.exports.handler = serverless(app);
