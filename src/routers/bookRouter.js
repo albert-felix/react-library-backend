@@ -3,7 +3,7 @@ const Book = require("../models/book");
 
 const bookRouter = express.Router();
 
-bookRouter.get("/", async (req, res) => {
+bookRouter.post("/", async (req, res) => {
   try {
     const books = await Book.find({});
     res.status(200).json({ books });
